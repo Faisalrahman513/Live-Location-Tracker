@@ -166,10 +166,4 @@ Complete technical documentation including architecture diagrams, methodology, t
 
 ---
 
-## ⚠️ Disclaimer
-
-This project was built for **academic purposes only** as part of a DSA & COAL course at Air University. It is intended to demonstrate hybrid system architecture, algorithmic implementation, and full-stack development skills. Do not use this tool on individuals without their consent.
-
----
-
 *Air University — BS Cyber Security, Section F-24-A*
