@@ -1,0 +1,15 @@
+# Visual Studio
+.vs/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Backend
+Backend/__pycache__/
+Backend/tracking_data.db
+Backend/ngrok.exe
+
+# System files
+.DS_Store
+*.log
