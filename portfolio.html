@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhammad Faisal Rahman — Cyber Security Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ═══════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #050b14;
+      --bg2:       #071020;
+      --bg3:       #0a1628;
+      --card:      #0d1f38;
+      --border:    #1a3455;
+      --green:     #00ff88;
+      --cyan:      #00d4ff;
+      --orange:    #ff6b35;
+      --purple:    #a259ff;
+      --text:      #c8d6e5;
+      --muted:     #6b8099;
+      --white:     #e8f4fd;
+      --font-main: 'Space Grotesk', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-main);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ═══════════════════════════════════════════
+       SCROLLBAR
+    ═══════════════════════════════════════════ */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--green); }
+
+    /* ═══════════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════════ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(5, 11, 20, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0, 255, 136, 0.12);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      color: var(--green);
+      letter-spacing: 0.05em;
+    }
+    .nav-logo span { color: var(--muted); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--muted);
+      transition: color 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .nav-links a:hover { color: var(--green); }
+    .nav-cta {
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: var(--green);
+      border: 1px solid var(--green);
+      padding: 0.4rem 1rem;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--green); color: var(--bg); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--green); border-radius: 2px; transition: 0.3s; }
+
+    /* ═══════════════════════════════════════════
+       CANVAS BACKGROUND
+    ═══════════════════════════════════════════ */
+    #matrix-canvas {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0; opacity: 0.04;
+    }
+
+    /* ═══════════════════════════════════════════
+       SECTION LAYOUT
+    ═══════════════════════════════════════════ */
+    section { position: relative; z-index: 1; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--green);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .section-title .accent { color: var(--green); }
+    .divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--cyan));
+      margin: 1rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding-top: 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--green);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 40px; height: 1px;
+      background: var(--green);
+    }
+    .hero-name {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .hero-name .first { color: var(--white); }
+    .hero-name .last { color: var(--green); }
+    .hero-typed-wrapper {
+      height: 2.2rem;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+    .hero-typed {
+      font-family: var(--font-mono);
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: var(--cyan);
+      font-weight: 500;
+    }
+    .typed-cursor {
+      display: inline-block;
+      width: 2px; height: 1.1em;
+      background: var(--cyan);
+      vertical-align: middle;
+      animation: blink 0.9s step-end infinite;
+      margin-left: 2px;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .hero-bio {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 460px;
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--green);
+      color: var(--bg);
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 6px;
+      letter-spacing: 0.03em;
+      transition: box-shadow 0.2s, transform 0.2s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary:hover { box-shadow: 0 0 24px rgba(0,255,136,0.4); transform: translateY(-2px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--cyan);
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 6px;
+      border: 1px solid var(--cyan);
+      letter-spacing: 0.03em;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-secondary:hover { background: rgba(0,212,255,0.08); box-shadow: 0 0 20px rgba(0,212,255,0.2); transform: translateY(-2px); }
+    /* Hero stats */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .stat-card:hover { border-color: var(--green); transform: translateY(-3px); }
+    .stat-num {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--green);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    /* Terminal card */
+    .hero-terminal {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(0,255,136,0.05);
+    }
+    .terminal-header {
+      background: var(--card);
+      padding: 0.75rem 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #ff5f57; }
+    .dot-yellow { background: #febc2e; }
+    .dot-green { background: #28c840; }
+    .terminal-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-left: 0.5rem;
+    }
+    .terminal-body {
+      padding: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 2;
+    }
+    .t-line { display: flex; gap: 0.5rem; }
+    .t-prompt { color: var(--green); }
+    .t-cmd { color: var(--white); }
+    .t-out { color: var(--cyan); padding-left: 1rem; }
+    .t-comment { color: var(--muted); }
+    .t-green { color: var(--green); }
+    .t-orange { color: var(--orange); }
+    .t-blank { height: 0.5rem; }
+
+    /* ═══════════════════════════════════════════
+       ABOUT
+    ═══════════════════════════════════════════ */
+    #about { padding: 6rem 0; background: var(--bg2); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .about-photo-wrap {
+      position: relative;
+    }
+    .about-photo-placeholder {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-photo-placeholder::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 40%, rgba(0,255,136,0.06) 0%, transparent 70%);
+    }
+    .about-photo-icon {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--bg3);
+      border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem;
+    }
+    .about-photo-badge {
+      position: absolute;
+      bottom: 1.5rem; right: 1.5rem;
+      background: var(--green);
+      color: var(--bg);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.3rem 0.7rem;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+    }
+    .about-bio {
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 2rem;
+      line-height: 1.85;
+    }
+    .about-bio strong { color: var(--white); font-weight: 600; }
+    .about-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      margin-bottom: 2rem;
+    }
+    .about-table tr { border-bottom: 1px solid var(--border); }
+    .about-table tr:last-child { border-bottom: none; }
+    .about-table td { padding: 0.65rem 0; }
+    .about-table td:first-child {
+      font-family: var(--font-mono);
+      color: var(--green);
+      font-size: 0.78rem;
+      width: 40%;
+      padding-right: 1rem;
+      letter-spacing: 0.04em;
+    }
+    .about-table td:last-child { color: var(--text); }
+    .about-socials { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .social-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+    .social-btn:hover { border-color: var(--green); color: var(--green); transform: translateY(-2px); }
+
+    /* ═══════════════════════════════════════════
+       CERTIFICATIONS
+    ═══════════════════════════════════════════ */
+    #certifications { padding: 6rem 0; }
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .cert-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      display: flex; flex-direction: column;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .cert-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--cyan));
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .cert-card:hover { border-color: rgba(0,255,136,0.4); transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 20px rgba(0,255,136,0.06); }
+    .cert-card:hover::before { opacity: 1; }
+    .cert-issuer-row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .cert-badge {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .badge-google  { background: rgba(66,133,244,0.15); color: #4285f4; border: 1px solid rgba(66,133,244,0.3); }
+    .badge-ibm     { background: rgba(0,115,252,0.15); color: #0073fc; border: 1px solid rgba(0,115,252,0.3); }
+    .badge-udemy   { background: rgba(167,59,211,0.15); color: #a73bd3; border: 1px solid rgba(167,59,211,0.3); }
+    .badge-cisco   { background: rgba(0,188,188,0.15); color: #00bcbc; border: 1px solid rgba(0,188,188,0.3); }
+    .badge-coursera{ background: rgba(0,86,210,0.15); color: #0056d2; border: 1px solid rgba(0,86,210,0.3); }
+    .cert-icon {
+      font-size: 1.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .cert-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+      flex: 1;
+    }
+    .cert-meta {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      margin-bottom: 1rem;
+    }
+    .cert-verify {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--green);
+      border: 1px solid rgba(0,255,136,0.3);
+      padding: 0.35rem 0.75rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+      width: fit-content;
+    }
+    .cert-verify:hover { background: rgba(0,255,136,0.1); }
+    .cert-cisco-badge {
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,188,188,0.08);
+      border: 2px dashed rgba(0,188,188,0.3);
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 2.5rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       SKILLS
+    ═══════════════════════════════════════════ */
+    #skills { padding: 6rem 0; background: var(--bg2); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .skill-category {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+    .skill-category:hover { border-color: rgba(0,212,255,0.35); }
+    .skill-cat-header {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .skill-cat-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .skill-cat-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .skill-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: var(--bg3);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .skill-category:hover .skill-tag { border-color: rgba(0,212,255,0.2); }
+    /* Color variants */
+    .ic-red    { background: rgba(255,107,53,0.12); }
+    .ic-green  { background: rgba(0,255,136,0.1); }
+    .ic-blue   { background: rgba(0,212,255,0.1); }
+    .ic-purple { background: rgba(162,89,255,0.1); }
+    .ic-orange { background: rgba(255,165,0,0.1); }
+    .ic-teal   { background: rgba(0,188,188,0.1); }
+
+    /* ═══════════════════════════════════════════
+       PROJECTS
+    ═══════════════════════════════════════════ */
+    #projects { padding: 6rem 0; }
+    .projects-list { display: flex; flex-direction: column; gap: 2.5rem; }
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .project-card:hover { border-color: rgba(0,255,136,0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 30px rgba(0,255,136,0.04); }
+    .project-visual {
+      background: var(--bg3);
+      min-height: 280px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+      border-right: 1px solid var(--border);
+    }
+    .project-visual-inner {
+      text-align: center;
+      padding: 2rem;
+      position: relative; z-index: 1;
+    }
+    .project-emoji { font-size: 3.5rem; margin-bottom: 1rem; }
+    .project-visual-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+    .project-visual::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(0,255,136,0.06) 0%, transparent 70%);
+    }
+    /* Grid pattern overlay */
+    .project-visual::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,255,136,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .project-content { padding: 2rem; }
+    .project-number {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--green);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+    }
+    .project-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.35rem;
+    }
+    .project-subtitle {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      margin-bottom: 1rem;
+    }
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+    .project-features {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+    .project-features li {
+      font-size: 0.82rem;
+      color: var(--text);
+      padding: 0.2rem 0;
+      display: flex; align-items: flex-start; gap: 0.5rem;
+    }
+    .project-features li::before {
+      content: '▸';
+      color: var(--green);
+      flex-shrink: 0;
+      font-size: 0.75rem;
+      margin-top: 0.2rem;
+    }
+    .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+    .tech-tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 3px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--cyan);
+    }
+    .project-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .project-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .project-link:hover { border-color: var(--green); color: var(--green); background: rgba(0,255,136,0.05); }
+    .project-link.primary { background: rgba(0,255,136,0.1); border-color: rgba(0,255,136,0.4); color: var(--green); }
+
+    /* ═══════════════════════════════════════════
+       CONTACT
+    ═══════════════════════════════════════════ */
+    #contact { padding: 6rem 0; background: var(--bg2); }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-heading {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+    .contact-heading .accent { color: var(--green); }
+    .contact-text {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-link-item {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .contact-link-item:hover { border-color: var(--green); transform: translateX(4px); }
+    .contact-link-icon {
+      width: 40px; height: 40px;
+      border-radius: 8px;
+      background: var(--bg3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .contact-link-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.15rem;
+    }
+    .contact-link-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .contact-availability {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+    .availability-header {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+    .availability-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 8px var(--green); }
+      50% { box-shadow: 0 0 20px var(--green); }
+    }
+    .availability-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .availability-body {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    .availability-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .avail-tag {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      background: rgba(0,255,136,0.08);
+      border: 1px solid rgba(0,255,136,0.25);
+      color: var(--green);
+    }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--green); }
+
+    /* ═══════════════════════════════════════════
+       ANIMATED REVEAL
+    ═══════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-terminal { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .cert-grid { grid-template-columns: repeat(2, 1fr); }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+      .project-card { grid-template-columns: 1fr; }
+      .project-visual { min-height: 160px; border-right: none; border-bottom: 1px solid var(--border); }
+      .contact-inner { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .cert-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ═══════════════════════════════════════════
+       MOBILE NAV MENU
+    ═══════════════════════════════════════════ */
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 64px; left: 0; right: 0;
+      background: var(--bg3);
+      border-bottom: 1px solid var(--border);
+      z-index: 999;
+      padding: 1.5rem 2rem;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.75rem;
+    }
+    .mobile-menu a:last-child { border-bottom: none; padding-bottom: 0; }
+    .mobile-menu a:hover { color: var(--green); }
+
+    /* ═══════════════════════════════════════════
+       MISC UTILITIES
+    ═══════════════════════════════════════════ */
+    .glow-green { text-shadow: 0 0 20px rgba(0,255,136,0.5); }
+    .inline-code {
+      font-family: var(--font-mono);
+      font-size: 0.8em;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 0.1em 0.4em;
+      border-radius: 3px;
+      color: var(--cyan);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Matrix canvas background -->
+<canvas id="matrix-canvas"></canvas>
+
+<!-- ─────────────────────────── NAVBAR ─────────────────────────── -->
+<nav>
+  <div class="nav-logo"><span>~/</span>faisal<span>@</span>portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:fmfaisalrahman@gmail.com" class="nav-cta">Hire Me →</a>
+  <div class="nav-hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about" onclick="closeMobileMenu()">About</a>
+  <a href="#certifications" onclick="closeMobileMenu()">Certifications</a>
+  <a href="#skills" onclick="closeMobileMenu()">Skills</a>
+  <a href="#projects" onclick="closeMobileMenu()">Projects</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+</div>
+
+<!-- ─────────────────────────── HERO ─────────────────────────── -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+
+      <!-- Left: Text Content -->
+      <div>
+        <div class="hero-eyebrow">BS Cyber Security — Air University</div>
+        <h1 class="hero-name">
+          <span class="first">Muhammad Faisal</span><br>
+          <span class="last glow-green">Rahman</span>
+        </h1>
+        <div class="hero-typed-wrapper">
+          <span class="hero-typed" id="typed-text"></span><span class="typed-cursor"></span>
+        </div>
+        <p class="hero-bio">
+          4th semester cybersecurity student with <strong>real hands-on experience</strong> —
+          from offensive security labs to full-stack development. Started freelancing in 1st semester
+          and hasn't stopped since. Holding <strong>9 industry certifications</strong> from IBM, Google, Cisco &amp; Udemy.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-primary">⚡ Let's Connect</a>
+          <a href="#projects" class="btn-secondary">🔍 View Projects</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-card reveal">
+            <span class="stat-num">9</span>
+            <span class="stat-label">Certifications</span>
+          </div>
+          <div class="stat-card reveal">
+            <span class="stat-num">10+</span>
+            <span class="stat-label">Clients Served</span>
+          </div>
+          <div class="stat-card reveal">
+            <span class="stat-num">4th</span>
+            <span class="stat-label">Semester</span>
+          </div>
+          <div class="stat-card reveal">
+            <span class="stat-num">1st</span>
+            <span class="stat-label">Sem Freelancing Start</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Terminal -->
+      <div class="hero-terminal reveal">
+        <div class="terminal-header">
+          <div class="terminal-dot dot-red"></div>
+          <div class="terminal-dot dot-yellow"></div>
+          <div class="terminal-dot dot-green"></div>
+          <span class="terminal-title">faisal@kali:~$</span>
+        </div>
+        <div class="terminal-body">
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> whoami</span></div>
+          <div class="t-line"><span class="t-out">muhammad-faisal-rahman</span></div>
+          <div class="t-blank"></div>
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> cat profile.txt</span></div>
+          <div class="t-line"><span class="t-out">University  : Air University, Islamabad</span></div>
+          <div class="t-line"><span class="t-out">Department  : BS Cyber Security</span></div>
+          <div class="t-line"><span class="t-out">Semester    : <span class="t-green">4th</span></span></div>
+          <div class="t-line"><span class="t-out">Status      : <span class="t-green">Seeking Summer 2026 Internship</span></span></div>
+          <div class="t-blank"></div>
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> ls skills/</span></div>
+          <div class="t-line"><span class="t-out"><span class="t-green">metasploit/</span>  <span class="t-orange">burpsuite/</span>  <span class="t-green">nmap/</span></span></div>
+          <div class="t-line"><span class="t-out"><span class="t-orange">wireshark/</span>  <span class="t-green">kali-linux/</span>  <span class="t-orange">aws/</span></span></div>
+          <div class="t-line"><span class="t-out"><span class="t-green">react/</span>  <span class="t-orange">python-flask/</span>  <span class="t-green">c++/</span></span></div>
+          <div class="t-blank"></div>
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> certifications --count</span></div>
+          <div class="t-line"><span class="t-out"><span class="t-green">9 verified certifications found ✓</span></span></div>
+          <div class="t-blank"></div>
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> <span id="terminal-blink">_</span></span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── ABOUT ─────────────────────────── -->
+<section id="about">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">// 01. about.me</p>
+      <h2 class="section-title">Who I <span class="accent">Am</span></h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-photo-wrap reveal">
+        <div class="about-photo-placeholder">
+          <div class="about-photo-icon">🧑‍💻</div>
+          <span style="color:var(--muted);font-size:0.75rem;text-align:center;line-height:1.5;">
+            Muhammad Faisal Rahman<br>
+            <span style="color:var(--green);">Cybersecurity Student</span>
+          </span>
+          <div class="about-photo-badge">Available for Internship</div>
+        </div>
+      </div>
+
+      <div class="about-content reveal">
+        <p class="about-bio">
+          I'm a <strong>4th semester BS Cyber Security student at Air University, Islamabad</strong>,
+          and what sets me apart is that I didn't wait until graduation to build real experience.
+          I started freelancing from my <strong>very first semester</strong> — delivering professional
+          document solutions to clients before most peers had written their first program.
+        </p>
+        <p class="about-bio">
+          Today, I work with real offensive security tools, build full-stack applications
+          that bridge JavaScript, Python, and C++, and run penetration testing labs on
+          controlled network environments. I don't just study cybersecurity — I practice it.
+        </p>
+
+        <table class="about-table">
+          <tr><td>University</td><td>Air University, Islamabad</td></tr>
+          <tr><td>Department</td><td>BS Cyber Security</td></tr>
+          <tr><td>Section</td><td>F-24-A</td></tr>
+          <tr><td>Semester</td><td>4th Semester</td></tr>
+          <tr><td>Location</td><td>Pakistan 🇵🇰</td></tr>
+          <tr><td>Email</td><td><a href="mailto:fmfaisalrahman@gmail.com" style="color:var(--cyan)">fmfaisalrahman@gmail.com</a></td></tr>
+          <tr><td>Status</td><td><span style="color:var(--green);font-weight:600;">Open to Summer 2026 Internship ✓</span></td></tr>
+        </table>
+
+        <div class="about-socials">
+          <a href="https://github.com/Faisalrahman513" target="_blank" rel="noopener noreferrer" class="social-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.42 7.87 10.95.58.1.79-.25.79-.55v-1.92c-3.2.69-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.68-1.27-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 012.88-.39c.98.01 1.96.13 2.88.39 2.2-1.49 3.16-1.18 3.16-1.18.63 1.58.24 2.75.12 3.04.74.81 1.18 1.83 1.18 3.09 0 4.43-2.7 5.41-5.27 5.69.42.36.79 1.07.79 2.15v3.19c0 .31.21.67.8.55C20.21 21.41 23.5 17.1 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/muhammad-faisal-rahman-b81196299/" target="_blank" rel="noopener noreferrer" class="social-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.03-1.85-3.03-1.85 0-2.13 1.44-2.13 2.93v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.43v6.31zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.57V9h3.55v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+            LinkedIn
+          </a>
+          <a href="mailto:fmfaisalrahman@gmail.com" class="social-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Email
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── CERTIFICATIONS ─────────────────────────── -->
+<section id="certifications">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">// 02. certifications</p>
+      <h2 class="section-title">Industry <span class="accent">Credentials</span></h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="cert-grid">
+
+      <!-- Cert 1 -->
+      <div class="cert-card reveal">
+        <div class="cert-issuer-row">
+          <span class="cert-badge badge-google">Google</span>
+          <span style="font-size:1rem;">🎓</span>
+        </div>
+        <div class="cert-icon">🔐</div>
+        <div class="cert-name">Foundations of Cybersecurity</div>
+        <div class="cert-meta">Aug 11, 2025 · Google Career Certificate (Coursera)</div>
+        <a href="https://coursera.org/verify/KCPBVBB7TMOS" target="_blank" rel="noopener noreferrer" class="cert-verify">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Verify Certificate
+        </a>
+      </div>
+
+      <!-- Cert 2 -->
+      <div class="cert-card reveal">
+        <div class="cert-issuer-row">
+          <span class="cert-badge badge-google">Google</span>
+          <span style="font-size:1rem;">🛡️</span>
+        </div>
+        <div class="cert-icon">⚠️</div>
+        <div class="cert-name">Play It Safe: Manage Security Risks</div>
+        <div class="cert-meta">Aug 29, 2025 · Google Career Certificate (Coursera)</div>
+        <a href="https://coursera.org/verify/1J3SOFOAFE5Y" target="_blank" rel="noopener noreferrer" class="cert-verify">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Verify Certificate
+        </a>
+      </div>
+
+      <!-- Cert 3 -->
+      <div class="cert-card reveal">
+        <div class="cert-issuer-row">
+          <span class="cert-badge badge-ibm">IBM</span>
+          <span style="font-size:1rem;">💼</span>
+        </div>
+        <div class="cert-icon">🏢</div>
+        <div class="cert-name">Introduction to Cybersecurity Careers</div>
+        <div class="cert-meta">Aug 3, 2025 · IBM Certificate (Coursera)</div>
+        <a href="https://coursera.org/verify/N9YBKP36A9X7" target="_blank" rel="noopener noreferrer" class="cert-verify">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Verify Certificate
+        </a>
+      </div>
+
+      <!-- Cert 4 -->
+      <div class="cert-card reveal">
+        <div class="cert-issuer-row">
+          <span class="cert-badge badge-coursera">Coursera</span>
+          <span style="font-size:1rem;">🎯</span>
+        </div>
+        <div class="cert-icon">⚔️</div>
+        <div class="cert-name">Certified Ethical Hacker (CEH)</div>
+        <div class="cert-meta">Coursera Verified · Ethical Hacking</div>
+        <span class="cert-verify" style="opacity:0.5;cursor:default;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Link Coming Soon
+        </span>
+      </div>
+
+      <!-- Cert 5 -->
+      <div class="cert-card reveal">
+        <div class="cert-issuer-row">
+          <span class="cert-badge badge-udemy">Udemy</span>
+          <span style="font-size:1rem;">🕵️</span>
+        </div>
+        <div class="cert-icon">💻</div>
+        <div class="cert-name">Complete Ethical Hacking Course 2026: Zero to Hero</div>
+        <div class="cert-meta">Feb 17, 2026 · 5.5h · Ramsai Dupati</div>
+        <a href="https://ude.my/UC-1c13a063-7939-435c-af5e-82255000d2d0" target="_blank" rel="noopener noreferrer" class="cert-verify">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Verify Certificate
+        </a>
+      </div>
+
+      <!-- Cert 6 -->
+      <div class="cert-card reveal">
+        <div class="cert-issuer-row">
+          <span class="cert-badge badge-udemy">Udemy</span>
+          <span style="font-size:1rem;">🌐</span>
+        </div>
+        <div class="cert-icon">🔌</div>
+        <div class="cert-name">Practical Cisco Networking Labs in Cisco Packet Tracer</div>
+        <div class="cert-meta">Feb 17, 2026 · 12h · Cyber Quince</div>
+        <a href="https://ude.my/UC-8e794fdc-7d40-453c-9094-40dc88d9620d" target="_blank" rel="noopener noreferrer" class="cert-verify">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Verify Certificate
+        </a>
+      </div>
+
+      <!-- Cert 7 -->
+      <div class="cert-card reveal">
+        <div class="cert-issuer-row">
+          <span class="cert-badge badge-udemy">Udemy</span>
+          <span style="font-size:1rem;">☁️</span>
+        </div>
+        <div class="cert-icon">🌩️</div>
+        <div class="cert-name">Cloud Computing Fundamentals — Basics for Beginners [2026]</div>
+        <div class="cert-meta">Mar 4, 2026 · 4h · Codaming, Vedika Singh</div>
+        <a href="https://ude.my/UC-ed14ed39-a7f0-4d4a-a88d-5544a1921574" target="_blank" rel="noopener noreferrer" class="cert-verify">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Verify Certificate
+        </a>
+      </div>
+
+      <!-- Cert 8 -->
+      <div class="cert-card reveal">
+        <div class="cert-issuer-row">
+          <span class="cert-badge badge-udemy">Udemy</span>
+          <span style="font-size:1rem;">📡</span>
+        </div>
+        <div class="cert-icon">🗂️</div>
+        <div class="cert-name">Computer Networks Theory and Network Configurations</div>
+        <div class="cert-meta">Nov 19, 2024 · 4h · Gerasimos Magoulas</div>
+        <a href="https://ude.my/UC-0fcfb911-3a53-42fa-aaac-291cb5da6220" target="_blank" rel="noopener noreferrer" class="cert-verify">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Verify Certificate
+        </a>
+      </div>
+
+      <!-- Cert 9 — Cisco (featured) -->
+      <div class="cert-card reveal" style="border-color:rgba(0,188,188,0.3);">
+        <div class="cert-issuer-row">
+          <span class="cert-badge badge-cisco">Cisco</span>
+          <span style="font-size:1rem;">⭐</span>
+        </div>
+        <div class="cert-cisco-badge">🏅</div>
+        <div class="cert-name">Network Technician Career Path</div>
+        <div class="cert-meta">Cisco Networking Academy · Verified Digital Badge</div>
+        <span class="cert-verify" style="background:rgba(0,188,188,0.08);border-color:rgba(0,188,188,0.35);color:#00bcbc;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Cisco Verified Badge
+        </span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SKILLS ─────────────────────────── -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">// 03. tech_stack</p>
+      <h2 class="section-title">Technical <span class="accent">Arsenal</span></h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="skills-grid">
+
+      <div class="skill-category reveal">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon ic-red">⚔️</div>
+          <div class="skill-cat-title">Offensive Security</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Metasploit</span>
+          <span class="skill-tag">Burp Suite</span>
+          <span class="skill-tag">Nmap</span>
+          <span class="skill-tag">Wireshark</span>
+          <span class="skill-tag">Aircrack-ng</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon ic-orange">🔍</div>
+          <div class="skill-cat-title">Vulnerability Assessment</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">OpenVAS</span>
+          <span class="skill-tag">Nessus</span>
+          <span class="skill-tag">Nikto</span>
+          <span class="skill-tag">Risk Management</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon ic-blue">☁️</div>
+          <div class="skill-cat-title">Cloud &amp; SIEM</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">AWS</span>
+          <span class="skill-tag">Microsoft Azure</span>
+          <span class="skill-tag">Graylog SIEM</span>
+          <span class="skill-tag">Cisco Packet Tracer</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon ic-teal">🖥️</div>
+          <div class="skill-cat-title">Operating Systems</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Kali Linux</span>
+          <span class="skill-tag">Parrot OS</span>
+          <span class="skill-tag">REMnux</span>
+          <span class="skill-tag">Windows Server 2016/19</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon ic-green">💻</div>
+          <div class="skill-cat-title">Development</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Flask</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">C++</span>
+          <span class="skill-tag">Assembly</span>
+          <span class="skill-tag">Git / GitHub</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal">
+        <div class="skill-cat-header">
+          <div class="skill-cat-icon ic-purple">🧠</div>
+          <div class="skill-cat-title">Core Disciplines</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Penetration Testing</span>
+          <span class="skill-tag">Reverse Engineering</span>
+          <span class="skill-tag">OSINT</span>
+          <span class="skill-tag">Red Teaming</span>
+          <span class="skill-tag">Blue Teaming</span>
+          <span class="skill-tag">Network Security</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── PROJECTS ─────────────────────────── -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">// 04. projects</p>
+      <h2 class="section-title">What I've <span class="accent">Built</span></h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="projects-list">
+
+      <!-- Project 1: Live Location Tracker -->
+      <div class="project-card reveal">
+        <div class="project-visual">
+          <div class="project-visual-inner">
+            <div class="project-emoji">🗺️</div>
+            <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--green);letter-spacing:0.1em;margin-bottom:0.5rem;">LIVE DASHBOARD</div>
+            <div style="display:flex;gap:0.4rem;flex-wrap:wrap;justify-content:center;margin-bottom:1rem;">
+              <span style="font-size:1.4rem;">📍</span>
+              <span style="font-size:1.4rem;">🌐</span>
+              <span style="font-size:1.4rem;">🔍</span>
+              <span style="font-size:1.4rem;">🛡️</span>
+            </div>
+            <div class="project-visual-title">React · Flask · C++ DLL · SQLite</div>
+          </div>
+        </div>
+        <div class="project-content">
+          <div class="project-number">Project 01 / Academic — DSA &amp; COAL</div>
+          <h3 class="project-title">Live Location Tracker</h3>
+          <p class="project-subtitle">Air University, 2024 · Full-Stack Hybrid Intelligence System</p>
+          <p class="project-desc">
+            A real-time GPS tracking system with OSINT intelligence built into a single web app.
+            A trap link sends targets to a fake Cloudflare verification page — one click captures
+            their IP and GPS coordinates, displayed live on an interactive map dashboard.
+          </p>
+          <ul class="project-features">
+            <li>Real-time GPS tracking via trap links with fake verification page</li>
+            <li>OSINT scanning — email MX records + GitHub, Reddit, Instagram</li>
+            <li>VPN/Proxy detection via HTTP header heuristics</li>
+            <li>C++ DLL geofencing: Ray Casting + Shoelace Formula — 40% faster</li>
+            <li>Multi-threaded backend prevents UI lag during heavy network scans</li>
+            <li>SQLite target management database</li>
+          </ul>
+          <div class="project-tech">
+            <span class="tech-tag">React</span>
+            <span class="tech-tag">Vite</span>
+            <span class="tech-tag">React-Leaflet</span>
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">Flask</span>
+            <span class="tech-tag">SQLite</span>
+            <span class="tech-tag">C++ DLL</span>
+            <span class="tech-tag">ctypes</span>
+            <span class="tech-tag">Ngrok</span>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/Faisalrahman513/Live-Location-Tracker" target="_blank" rel="noopener noreferrer" class="project-link primary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.42 7.87 10.95.58.1.79-.25.79-.55v-1.92c-3.2.69-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.68-1.27-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 012.88-.39c.98.01 1.96.13 2.88.39 2.2-1.49 3.16-1.18 3.16-1.18.63 1.58.24 2.75.12 3.04.74.81 1.18 1.83 1.18 3.09 0 4.43-2.7 5.41-5.27 5.69.42.36.79 1.07.79 2.15v3.19c0 .31.21.67.8.55C20.21 21.41 23.5 17.1 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+              View on GitHub
+            </a>
+            <a href="./Docs/Live_Location_Tracker_Report.pdf" target="_blank" rel="noopener noreferrer" class="project-link">
+              📄 Project Report
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2: Network Attack Simulations -->
+      <div class="project-card reveal" style="flex-direction:row-reverse;">
+        <div class="project-visual">
+          <div class="project-visual-inner">
+            <div class="project-emoji">🔥</div>
+            <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--orange);letter-spacing:0.1em;margin-bottom:0.5rem;">CONTROLLED LAB</div>
+            <div style="display:flex;gap:0.4rem;flex-wrap:wrap;justify-content:center;margin-bottom:1rem;">
+              <span style="font-size:1.4rem;">💀</span>
+              <span style="font-size:1.4rem;">🕵️</span>
+              <span style="font-size:1.4rem;">📡</span>
+              <span style="font-size:1.4rem;">🐉</span>
+            </div>
+            <div class="project-visual-title">Metasploit · Wireshark · Kali</div>
+          </div>
+        </div>
+        <div class="project-content">
+          <div class="project-number">Project 02 / Penetration Testing Lab</div>
+          <h3 class="project-title">Network Attack Simulations</h3>
+          <p class="project-subtitle">Controlled Lab Environment · Offensive Security Practice</p>
+          <p class="project-desc">
+            Designed and executed complex network attack scenarios in a controlled lab environment,
+            applying real tools used by professional red teamers and penetration testers.
+          </p>
+          <ul class="project-features">
+            <li>DoS / DDoS deployment and traffic analysis</li>
+            <li>Man-in-the-Middle (MITM) attack execution and packet capture</li>
+            <li>Deep packet inspection with Wireshark</li>
+            <li>Exploitation using Metasploit framework on vulnerable VMs</li>
+          </ul>
+          <div class="project-tech">
+            <span class="tech-tag">Kali Linux</span>
+            <span class="tech-tag">Metasploit</span>
+            <span class="tech-tag">Wireshark</span>
+            <span class="tech-tag">Nmap</span>
+            <span class="tech-tag">Network Analysis</span>
+          </div>
+          <div class="project-links">
+            <a href="#contact" class="project-link">
+              📨 Request Details
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── CONTACT ─────────────────────────── -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-label">// 05. contact</p>
+      <h2 class="section-title">Let's <span class="accent">Work Together</span></h2>
+      <div class="divider"></div>
+    </div>
+
+    <div class="contact-inner">
+      <div class="reveal">
+        <h3 class="contact-heading">Open to <span class="accent">Summer 2026</span> Internship Opportunities</h3>
+        <p class="contact-text">
+          Looking for a cybersecurity intern who brings real hands-on experience, not just textbook knowledge?
+          I'm actively seeking paid Summer 2026 internships in Pakistan or remote roles.
+          Whether you need a penetration tester, security analyst, or a full-stack developer — let's talk.
+        </p>
+
+        <div class="contact-links">
+          <a href="mailto:fmfaisalrahman@gmail.com" class="contact-link-item">
+            <div class="contact-link-icon">📧</div>
+            <div>
+              <div class="contact-link-label">EMAIL</div>
+              <div class="contact-link-value">fmfaisalrahman@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://github.com/Faisalrahman513" target="_blank" rel="noopener noreferrer" class="contact-link-item">
+            <div class="contact-link-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.42 7.87 10.95.58.1.79-.25.79-.55v-1.92c-3.2.69-3.87-1.54-3.87-1.54-.52-1.33-1.27-1.68-1.27-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.53-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 012.88-.39c.98.01 1.96.13 2.88.39 2.2-1.49 3.16-1.18 3.16-1.18.63 1.58.24 2.75.12 3.04.74.81 1.18 1.83 1.18 3.09 0 4.43-2.7 5.41-5.27 5.69.42.36.79 1.07.79 2.15v3.19c0 .31.21.67.8.55C20.21 21.41 23.5 17.1 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+            </div>
+            <div>
+              <div class="contact-link-label">GITHUB</div>
+              <div class="contact-link-value">github.com/Faisalrahman513</div>
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/muhammad-faisal-rahman-b81196299/" target="_blank" rel="noopener noreferrer" class="contact-link-item">
+            <div class="contact-link-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.03-1.85-3.03-1.85 0-2.13 1.44-2.13 2.93v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.36 4.26 5.43v6.31zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.57V9h3.55v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+            </div>
+            <div>
+              <div class="contact-link-label">LINKEDIN</div>
+              <div class="contact-link-value">Muhammad Faisal Rahman</div>
+            </div>
+          </a>
+          <div class="contact-link-item" style="cursor:default;">
+            <div class="contact-link-icon">📍</div>
+            <div>
+              <div class="contact-link-label">LOCATION</div>
+              <div class="contact-link-value">Pakistan 🇵🇰</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-availability reveal">
+        <div class="availability-header">
+          <div class="availability-dot"></div>
+          <div class="availability-title">Currently Available</div>
+        </div>
+        <p class="availability-body">
+          Actively seeking <strong style="color:var(--white);">paid Summer 2026 internships</strong> in cybersecurity,
+          penetration testing, cloud security, or full-stack development roles. Open to remote and Pakistan-based
+          positions. Fast learner, self-motivated, and ready to contribute from day one.
+        </p>
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:0.78rem;color:var(--muted);font-family:var(--font-mono);margin-bottom:0.75rem;">WHAT I BRING:</div>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:var(--text);">
+              <span style="color:var(--green);">✓</span> Real offensive security lab experience
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:var(--text);">
+              <span style="color:var(--green);">✓</span> Full-stack development (React, Python, C++)
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:var(--text);">
+              <span style="color:var(--green);">✓</span> Cloud platforms (AWS, Azure) + SIEM
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:var(--text);">
+              <span style="color:var(--green);">✓</span> 9 industry certifications (Google, IBM, Cisco)
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;color:var(--text);">
+              <span style="color:var(--green);">✓</span> Freelance track record since 1st semester
+            </div>
+          </div>
+        </div>
+        <div class="availability-tags">
+          <span class="avail-tag">Penetration Testing</span>
+          <span class="avail-tag">Security Analysis</span>
+          <span class="avail-tag">Red Teaming</span>
+          <span class="avail-tag">Cloud Security</span>
+          <span class="avail-tag">Full-Stack Dev</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── FOOTER ─────────────────────────── -->
+<footer>
+  <p>
+    Crafted by <a href="https://github.com/Faisalrahman513">Muhammad Faisal Rahman</a>
+    &nbsp;·&nbsp; BS Cyber Security, Air University
+    &nbsp;·&nbsp; <a href="mailto:fmfaisalrahman@gmail.com">fmfaisalrahman@gmail.com</a>
+  </p>
+  <p style="margin-top:0.5rem;opacity:0.5;">
+    © 2026 · Built with HTML, CSS &amp; JavaScript · No frameworks required
+  </p>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════ -->
+<script>
+// ── Matrix canvas background ──
+(function () {
+  const canvas = document.getElementById('matrix-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, cols, drops;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    cols = Math.floor(W / 18);
+    drops = Array.from({ length: cols }, () => Math.floor(Math.random() * H / 18));
+  }
+
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+-=[]{}|;:,.<>?/\\~`アイウエオカキクケコ';
+
+  function draw() {
+    ctx.fillStyle = 'rgba(5,11,20,0.05)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#00ff88';
+    ctx.font = '14px JetBrains Mono, monospace';
+    for (let i = 0; i < drops.length; i++) {
+      const ch = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillText(ch, i * 18, drops[i] * 18);
+      if (drops[i] * 18 > H && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  setInterval(draw, 55);
+})();
+
+// ── Typewriter effect ──
+(function () {
+  const roles = [
+    'Cyber Security Student',
+    'Offensive Security Enthusiast',
+    'Cloud & SIEM Specialist',
+    'Penetration Tester',
+    'Seeking Summer 2026 Internship'
+  ];
+  const el = document.getElementById('typed-text');
+  let roleIdx = 0, charIdx = 0, deleting = false;
+
+  function tick() {
+    const current = roles[roleIdx];
+    if (!deleting) {
+      el.textContent = current.slice(0, charIdx + 1);
+      charIdx++;
+      if (charIdx === current.length) {
+        deleting = true;
+        setTimeout(tick, 2000);
+        return;
+      }
+      setTimeout(tick, 70);
+    } else {
+      el.textContent = current.slice(0, charIdx - 1);
+      charIdx--;
+      if (charIdx === 0) {
+        deleting = false;
+        roleIdx = (roleIdx + 1) % roles.length;
+        setTimeout(tick, 400);
+        return;
+      }
+      setTimeout(tick, 40);
+    }
+  }
+  setTimeout(tick, 600);
+})();
+
+// ── Terminal blink ──
+(function () {
+  const el = document.getElementById('terminal-blink');
+  let on = true;
+  setInterval(() => { el.style.opacity = (on = !on) ? '1' : '0'; }, 600);
+})();
+
+// ── Scroll reveal ──
+(function () {
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+})();
+
+// ── Mobile nav ──
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+}
+document.getElementById('hamburger').addEventListener('click', function () {
+  document.getElementById('mobile-menu').classList.toggle('open');
+});
+document.getElementById('hamburger').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    document.getElementById('mobile-menu').classList.toggle('open');
+  }
+});
+
+// ── Active nav highlight on scroll ──
+(function () {
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    sections.forEach(section => {
+      const top = section.offsetTop - 100;
+      const bottom = top + section.offsetHeight;
+      if (scrollY >= top && scrollY < bottom) {
+        links.forEach(l => l.style.color = '');
+        const link = document.querySelector(`.nav-links a[href="#${section.id}"]`);
+        if (link) link.style.color = 'var(--green)';
+      }
+    });
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
